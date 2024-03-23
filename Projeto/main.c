@@ -1,19 +1,17 @@
-#include "barraca.h"
-#include "produto.h"
+#include "Barraca/barraca.c"
+
 
 int main(void)
 {
-    //Variavel para guardar produtos;
-    int QUANT_PROD = 0;
-    //Variavel para guardar Barracas;
-    int QUANT_BARRACAS = 0;
-    
+
     char opcao;
-    
+    char nome[30];
+    char localizacao[30];
+
     do
     {  
 
-        printf("====MENU====\n\n");
+        printf("=======MENU=======\n\n");
         printf("1 - Adicionar produto\n");
         printf("2 - Remover produto\n");
         printf("3 - Adicionar barraca\n");
@@ -22,7 +20,7 @@ int main(void)
         printf("6 - Buscar produto\n");
         printf("7 - Listar todas barracas\n");
         printf("8 - sair\n");
-        printf("============\n");
+        printf("==================\n");
        
         printf("Opcao: ");
         scanf(" %c", &opcao);
@@ -38,7 +36,11 @@ int main(void)
             break;
 
             case '3': 
-
+                printf("Digite o nome da nova barraca:\n");
+                scanf("%s",nome);
+                printf("Digite a localizacao da nova barraca:\n");
+                scanf("%s",localizacao);
+                Add_Barraca(nome,localizacao);
             break;
 
             case '4': 
@@ -65,7 +67,7 @@ int main(void)
     
     }while (opcao != '8');
     
-    printf("Progama encerrado com sucesso!\n");
+    printf("Programa encerrado com sucesso!\n");
     
     return 0;
 }
