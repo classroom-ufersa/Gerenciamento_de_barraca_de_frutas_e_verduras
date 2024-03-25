@@ -9,7 +9,9 @@ typedef struct barracas Barracas;
 /*Struct criada para listar as barracas*/
 typedef struct ListBarracas ListaBarracas;
 
-/*Funcao criada para adicionar uma nova barraca*/
-void Add_Barraca(char nome[], char localizacao[]);
+/*Função que cria a lista de barracas*/
+void criarlista(ListaBarracas **lista);
 
+/*Função que adiciona uma barraca na lista*/
+void AdicionarBarraca(ListaBarracas **lista, Barracas barraca);
 

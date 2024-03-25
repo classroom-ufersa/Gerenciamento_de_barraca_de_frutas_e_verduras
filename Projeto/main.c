@@ -1,5 +1,5 @@
 #include "Barraca/barraca.c"
-
+#include "Produto/produto.c"
 
 int main(void)
 {
@@ -7,6 +7,8 @@ int main(void)
     char opcao;
     char nome[30];
     char localizacao[30];
+    ListaBarracas *lista;
+    criarlista(&lista);
 
     do
     {  
@@ -36,11 +38,14 @@ int main(void)
             break;
 
             case '3': 
-                printf("Digite o nome da nova barraca:\n");
-                scanf("%s",nome);
-                printf("Digite a localizacao da nova barraca:\n");
-                scanf("%s",localizacao);
-                Add_Barraca(nome,localizacao);
+                printf("Digite o nome da barraca: ");
+                scanf(" %s", nome);
+                printf("Digite a localizacao da barraca: ");
+                scanf(" %s", localizacao);
+                Barracas barraca;
+                strcpy(barraca.nome, nome);
+                strcpy(barraca.localizacao, localizacao);
+                AdicionarBarraca(&lista, barraca);
             break;
 
             case '4': 
@@ -67,6 +72,7 @@ int main(void)
     
     }while (opcao != '8');
     
+    free(lista);
     printf("Programa encerrado com sucesso!\n");
     
     return 0;

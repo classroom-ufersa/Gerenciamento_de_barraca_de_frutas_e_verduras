@@ -1,10 +1,10 @@
 #include "barraca.h"
-
+#include "/home/lailson/Desktop/Github/repositories/Gerenciamento_de_barraca_de_frutas_e_verduras/Projeto/Produto/produto.h"
 struct barracas
 {
     char nome[30];
     char localizacao[30];
-    int Produtos_disponiveis;
+    ListaProdutos *produtos;
 };
 
 struct ListBarracas
@@ -13,34 +13,28 @@ struct ListBarracas
     ListaBarracas *proximo;
 };
 
-ListaBarracas *Primeiro;
-ListaBarracas *ultimo;
-
-void Add_Barraca(char nome[], char localizacao[])
+void criarlista(ListaBarracas **lista)
 {
-    ListaBarracas *NewBarraca = (ListaBarracas *)(sizeof(ListaBarracas));
-    
-    if(NewBarraca == NULL)
+    *lista = NULL;
+}
+
+void AdicionarBarraca(ListaBarracas **lista, Barracas barraca)
+{
+    ListaBarracas *novo = (ListaBarracas *)malloc(sizeof(ListaBarracas));
+    novo->Barraca = barraca;
+    novo->proximo = *lista;
+    *lista = novo;
+
+    FILE *arquivo = fopen("barracas.txt", "a");
+
+    if (arquivo == NULL)
     {
-        printf("não foi possivel alocar memoria\n");
-        exit(1);
-    }
-    
-    strcpy(NewBarraca->Barraca.nome,nome);
-    strcpy(NewBarraca->Barraca.localizacao,localizacao);
-    NewBarraca->proximo = NULL;
-    
-    if(Primeiro = NULL)
-    {
-        Primeiro = ultimo = NewBarraca;
-    }
-    
-    else
-    {
-        ultimo->proximo = NewBarraca;
-        ultimo = NewBarraca;
+        printf("Erro ao abrir o arquivo\n");
+        return;
     }
 
-    printf("BARRACA ADICIONADA!");
+    fprintf(arquivo, "%s\n%s\n", barraca.nome, barraca.localizacao);
 
+    fclose(arquivo);
+    printf("Barraca adicionada com sucesso!\n");
 }
