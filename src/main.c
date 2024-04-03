@@ -47,9 +47,18 @@ int main(void)
                     AdicionarProduto(&listabarr, &listaprod);
                 }
                 break;
-                
-            case '2':
 
+            case '2':
+                //verificicação de barraca   
+                if(listabarr == NULL)
+                {
+                    printf("Nenhuma barraca cadastrada\n");
+                    break;
+                }
+                else
+                {
+                    Remover_produto(&listabarr, &listaprod);
+                }
                 break;
 
             case '3':

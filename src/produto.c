@@ -129,3 +129,59 @@ void AdicionarProduto(ListaBarracas **listabarraca, ListaProdutos **listaproduto
         printf("Produto abastecido com sucesso\n");
     }
 }
+
+void Remover_produto(ListaBarracas **listabarraca, ListaProdutos **listaproduto){
+
+    //Escolhendo a barraca
+    printf("Em qual barraca deseja remover o produto?\n");
+    char nomebarraca[Max_Caracter];
+    scanf(" %[^\n]", nomebarraca);
+    system("clear");
+
+    //Ponteiro auxiliar
+    ListaBarracas *listaAux = *listabarraca;
+
+    //Procurando a barraca
+    while(listaAux != NULL && strcmp(listaAux->barraca.nome, nomebarraca) != 0){
+        listaAux = listaAux->prox;
+    }
+
+    //Verificando se a barraca foi encontrada
+    if(listaAux == NULL){
+        printf("Barraca nao encontrada\n");
+        return;
+    }
+
+    //Escolhendo o produto
+    printf("Nome do produto: ");
+    char nomeproduto[Max_Caracter];
+    scanf(" %[^\n]", nomeproduto);
+    system("clear");
+
+    //Ponteiro auxiliar
+    ListaProdutos *listaAux2 = listaAux->barraca.produtos;
+    ListaProdutos *ant = NULL;
+
+    //Procurando o produto
+    while(listaAux2 != NULL && strcmp(listaAux2->produto.nome, nomeproduto) != 0){
+        ant = listaAux2;
+        listaAux2 = listaAux2->prox;
+    }
+
+    //Verificando se o produto foi encontrado
+    if(listaAux2 == NULL){
+        printf("Produto nao encontrado\n");
+        return;
+    }
+
+    //Removendo o produto
+    if(ant == NULL){
+        listaAux->barraca.produtos = listaAux2->prox;
+    }
+    else{
+        ant->prox = listaAux2->prox;
+    }
+
+    free(listaAux2);
+    printf("Produto removido com sucesso\n");
+}

@@ -12,3 +12,9 @@ typedef struct listaprodutos ListaProdutos;
 
 /*Função criada para criar a lista de produtos*/
 void CriaLista(ListaProdutos **lista);
+
+/*Função criada para adicionar um produto na barraca*/
+void AdicionarProduto(ListaBarracas **listabarraca, ListaProdutos **listaprodutos);
+
+/*Função criada para remover um produto dentro da lista*/
+void Remover_produto(ListaBarracas **listabarraca, ListaProdutos **listaproduto);
