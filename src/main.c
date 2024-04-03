@@ -36,8 +36,18 @@ int main(void)
         switch (opcao)
         {
             case '1':
-                
+                //verificando se existem barracas cadastradas
+                if(listabarr == NULL)
+                {
+                    printf("Nenhuma barraca cadastrada\n");
+                    break;
+                }
+                else
+                {
+                    AdicionarProduto(&listabarr, &listaprod);
+                }
                 break;
+                
             case '2':
 
                 break;
@@ -61,7 +71,7 @@ int main(void)
                 }                  
 
             case '5':
-            
+
                 break;
 
             case '6':
