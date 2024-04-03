@@ -185,3 +185,58 @@ void Remover_produto(ListaBarracas **listabarraca, ListaProdutos **listaproduto)
     free(listaAux2);
     printf("Produto removido com sucesso\n");
 }
+
+void BuscarProduto(ListaBarracas **listabarraca, ListaProdutos **listaproduto){
+    //Escolhendo a barraca
+    printf("Em qual barraca deseja buscar o produto?\n");
+    char nomebarraca[Max_Caracter]; 
+    scanf(" %[^\n]", nomebarraca);
+    system("clear");
+
+    //Ponteiro auxiliar
+    ListaBarracas *listaAux = *listabarraca;
+
+    //Procurando a barraca
+    while(listaAux != NULL && strcmp(listaAux->barraca.nome, nomebarraca) != 0){
+        listaAux = listaAux->prox;
+    }
+
+    //Verificando se a barraca foi encontrada
+    if(listaAux == NULL){
+        printf("Barraca nao encontrada\n");
+        return;
+    }
+
+    //Escolhendo o produto
+    printf("Nome do produto: ");
+    char nomeproduto[Max_Caracter];
+    scanf(" %[^\n]", nomeproduto);
+    system("clear");
+
+    //Ponteiro auxiliar
+    ListaProdutos *listaAux2 = listaAux->barraca.produtos;
+
+    //Procurando o produto
+    while(listaAux2 != NULL && strcmp(listaAux2->produto.nome, nomeproduto) != 0){
+        listaAux2 = listaAux2->prox;
+    }
+
+    //Verificando se o produto foi encontrado
+    if(listaAux2 == NULL){
+        printf("Produto nao encontrado\n");
+        return;
+    }
+
+    //Mostrando os dados do produto
+    printf("Produto encontrado\nSeus dados:\n\n");
+    printf("Nome: %s\n", listaAux2->produto.nome);
+    printf("Tipo: %s\n", listaAux2->produto.tipo);
+    printf("Preco: %.2f\n", listaAux2->produto.preco);
+    printf("Quantidade: %d\n", listaAux2->produto.quantidade);
+
+    printf("Digite qualquer tecla para continuar\n");
+    char tecla;
+    scanf(" %c", &tecla);
+    system("clear");
+}
+

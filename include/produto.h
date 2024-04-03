@@ -18,3 +18,6 @@ void AdicionarProduto(ListaBarracas **listabarraca, ListaProdutos **listaproduto
 
 /*Função criada para remover um produto dentro da lista*/
 void Remover_produto(ListaBarracas **listabarraca, ListaProdutos **listaproduto);
+
+/*Função criada para buscar um produto dentro da lista*/
+void BuscarProduto(ListaBarracas **listabarraca, ListaProdutos **listaproduto);
