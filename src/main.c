@@ -43,11 +43,22 @@ int main(void)
                 break;
 
             case '3':
+                AdicionarBarraca(&listabarr);
                 break;
 
             case '4':
-                break;                
-
+                //verificicação de barraca
+                if(listabarr == NULL)
+                {
+                    printf("Nenhuma barraca cadastrada\n");
+                    break;
+                }
+               
+                else
+                {
+                    RemoverBarraca(&listabarr);
+                    break;                    
+                }                  
 
             case '5':
             
