@@ -1,5 +1,5 @@
-#include "/home/lailson/Desktop/Github/repositories/Gerenciamento_de_barraca_de_frutas_e_verduras/include/barraca.h"
-#include "/home/lailson/Desktop/Github/repositories/Gerenciamento_de_barraca_de_frutas_e_verduras/include/produto.h"
+#include "C:\Users\Tobyg\OneDrive\Área de Trabalho\EnviarAqui\Gerenciamento_de_barraca_de_frutas_e_verduras\include\barraca.h"
+#include "C:\Users\Tobyg\OneDrive\Área de Trabalho\EnviarAqui\Gerenciamento_de_barraca_de_frutas_e_verduras\include\produto.h"
 
 struct produto{
     char nome[Max_Caracter];

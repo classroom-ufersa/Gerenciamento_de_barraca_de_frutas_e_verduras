@@ -80,7 +80,16 @@ int main(void)
                 }                  
 
             case '5':
-
+                //verificicação de barraca
+                if(listabarr == NULL)
+                {
+                    printf("Nenhuma barraca cadastrada\n");
+                    break;
+                }
+                else
+                {
+                    RealizarVenda(&listabarr, &listaprod);
+                }
                 break;
 
             case '6':
@@ -98,6 +107,7 @@ int main(void)
                 break;
 
             case '7':
+                ListarBarraca(&listabarr);
                 break;
 
             case '8':

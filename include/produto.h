@@ -21,3 +21,9 @@ void Remover_produto(ListaBarracas **listabarraca, ListaProdutos **listaproduto)
 
 /*Função criada para buscar um produto dentro da lista*/
 void BuscarProduto(ListaBarracas **listabarraca, ListaProdutos **listaproduto);
+
+/*Função criada para venda de um produto*/
+void RealizarVenda(ListaBarracas **listabarraca, ListaProdutos **listaproduto);
+
+/*Função criada para listar todos os produtos de uma barraca*/
+void ListarBarraca(ListaBarracas **lista);
