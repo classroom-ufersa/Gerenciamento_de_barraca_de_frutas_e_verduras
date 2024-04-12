@@ -17,3 +17,6 @@ void AdicionarBarraca(ListaBarracas **lista);
 
 /*Função que irar remover uma barraca da lista*/
 void RemoverBarraca(ListaBarracas **lista);
+
+/*Função de editar um produto escolhido pelo usario*/
+void EditaProduto(ListaBarracas **lista);
