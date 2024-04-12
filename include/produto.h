@@ -15,6 +15,9 @@ typedef struct listaprodutos ListaProdutos;
 /*Função criada para criar a lista de produtos*/
 void CriaLista(ListaProdutos **lista);
 
+/*Função para pegar os dados do arquivos e passar para a lista*/
+void NovoProdutotxt(ListaBarracas **lista,char *nomebarraca, char *nomeproduto, float preco, char *tipo, int quantidade);
+
 /*Função para adicionar um novo produto dentro de uma barraca escolhida pelo usuario*/
 void AdicionaProduto(ListaBarracas **lista);
 

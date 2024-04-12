@@ -1,14 +1,17 @@
-#include "/home/lailson/Desktop/Github/repositories/Gerenciamento_de_barraca_de_frutas_e_verduras/include/barraca.h"
-#include "/home/lailson/Desktop/Github/repositories/Gerenciamento_de_barraca_de_frutas_e_verduras/include/produto.h"
+#include "/home/tobias/Desktop/ED1/Gerenciamento_de_barraca_de_frutas_e_verduras/include/produto.h"
+#include "/home/tobias/Desktop/ED1/Gerenciamento_de_barraca_de_frutas_e_verduras/include/barraca.h"
+#include "/home/tobias/Desktop/ED1/Gerenciamento_de_barraca_de_frutas_e_verduras/include/funcoes.h"
 
-struct produto{
+struct produto
+{
     char nome[Max_Caracter];
-    char tipo[Max_Caracter]; //Fruta ou verdura
+    char tipo[Max_Caracter]; // Fruta ou verdura
     float preco;
-    int quantidade;//Para um determinado produto
+    int quantidade; // Para um determinado produto
 };
 
-struct listaprodutos{
+struct listaprodutos
+{
     Produto produto;
     ListaProdutos *prox;
 };
@@ -18,8 +21,42 @@ void CriaLista(ListaProdutos **lista)
     *lista = NULL;
 }
 
-void AdicionaProduto(ListaBarracas **lista){
-    //Variaveis usadas
+void NovoProdutotxt(ListaBarracas **lista, char *nomebarraca, char *nomeproduto, float preco, char *tipo, int quantidade)
+{
+    // Verificando se a barraca existe
+    ListaBarracas *Novoprod = *lista;
+
+    while (Novoprod != NULL)
+    {
+        if (strcmp(Novoprod->barraca.nome, nomebarraca) == 0)
+        {
+            break;
+        }
+        Novoprod = Novoprod->prox;
+    }
+
+    // Se a barraca não existir
+    if (Novoprod == NULL)
+    {
+        printf("Barraca nao encontrada\n");
+        return;
+    }
+
+    // Adicionando o produto
+    ListaProdutos *novo = (ListaProdutos *)malloc(sizeof(ListaProdutos));
+    strcpy(novo->produto.nome, nomeproduto);
+    strcpy(novo->produto.tipo, tipo);
+    novo->produto.preco = preco;
+    novo->produto.quantidade = quantidade;
+    novo->prox = Novoprod->barraca.produtos;
+    Novoprod->barraca.produtos = novo;
+
+    return;
+}
+
+void AdicionaProduto(ListaBarracas **lista)
+{
+    // Variaveis usadas
     char NomeBarraca[Max_Caracter];
     char NomeProduto[Max_Caracter];
     float PrecoProduto;
@@ -27,11 +64,12 @@ void AdicionaProduto(ListaBarracas **lista){
     int QuantidadeProduto;
     int verificacao;
 
-    //Recebendo o nome da barraca
+    // Recebendo o nome da barraca
     printf("Digite o nome da barraca que voce deseja adicionar o produto: ");
     scanf(" %[^\n]", NomeBarraca);
+    passaMaiusculo(NomeBarraca);
 
-    //Verificando se a barraca existe
+    // Verificando se a barraca existe
     ListaBarracas *Novoprod = *lista;
 
     while (Novoprod != NULL)
@@ -43,30 +81,84 @@ void AdicionaProduto(ListaBarracas **lista){
         Novoprod = Novoprod->prox;
     }
 
-    //Se a barraca não existir
+    // Se a barraca não existir
     if (Novoprod == NULL)
     {
         printf("Barraca nao encontrada\n");
         return;
     }
 
-    //Recebendo o nome do produto
+    // Recebendo o nome do produto
     printf("Digite o nome do produto: ");
     scanf(" %[^\n]", NomeProduto);
 
-    //Recebendo o tipo do produto
+    // Verificando o formato do nome
+    if (verificaNome(NomeProduto) == 1)
+    {
+        while (verificaNome(NomeProduto) == 1)
+        {
+            printf("Nome invalido, deseja tentar novamente? (s/n): ");
+            char opcao;
+            scanf(" %c", &opcao);
+            if (opcao == 'n')
+            {
+                return;
+            }
+            printf("Digite o nome do produto: ");
+            scanf(" %[^\n]", NomeProduto);
+        }
+    }
+
+    // Recebendo o tipo do produto
     printf("Digite o tipo do produto: ");
     scanf(" %[^\n]", TipoProduto);
 
-    //Recebendo o preco do produto
+    // Verificando o formato do tipo
+    if (verificaNome(TipoProduto) == 1)
+    {
+        while (verificaNome(TipoProduto) == 1)
+        {
+            printf("Tipo invalido, deseja tentar novamente? (s/n): ");
+            char opcao;
+            scanf(" %c", &opcao);
+            if (opcao == 'n')
+            {
+                return;
+            }
+            printf("Digite o tipo do produto: ");
+            scanf(" %[^\n]", TipoProduto);
+        }
+    }
+
+    // Recebendo o preco do produto
     printf("Digite o preco do produto: ");
     scanf(" %f", &PrecoProduto);
 
-    //Recebendo a quantidade do produto
+    // verificando se o usuario digitou apenas numeros inteiros evitando char
+    if (getchar() != '\n')
+    {
+        printf("Preco invalido, digite novamente!\n");
+        while (getchar() != '\n')
+        {
+            scanf(" %f", &PrecoProduto);
+        }
+    }
+
+    // Recebendo a quantidade do produto
     printf("Digite a quantidade do produto: ");
     scanf(" %d", &QuantidadeProduto);
 
-    //Adicionando o produto
+    // verificando se o usuario digitou apenas numeros inteiros evitando char
+    if (getchar() != '\n')
+    {
+        printf("Quantidade invalida, digite novamente!\n");
+        while (getchar() != '\n')
+        {
+            scanf(" %d", &QuantidadeProduto);
+        }
+    }
+
+    // Adicionando o produto
     ListaProdutos *novo = (ListaProdutos *)malloc(sizeof(ListaProdutos));
 
     strcpy(novo->produto.nome, NomeProduto);
@@ -83,16 +175,17 @@ void AdicionaProduto(ListaBarracas **lista){
 
 void RemoveProduto(ListaBarracas **lista)
 {
-    //Variaveis usadas
+    // Variaveis usadas
     char NomeBarraca[Max_Caracter];
     char NomeProduto[Max_Caracter];
     int verificacao;
 
-    //Recebendo o nome da barraca
+    // Recebendo o nome da barraca
     printf("Digite o nome da barraca que voce deseja remover o produto: ");
     scanf(" %[^\n]", NomeBarraca);
+    passaMaiusculo(NomeBarraca);
 
-    //Verificando se a barraca existe
+    // Verificando se a barraca existe
     ListaBarracas *Novoprod = *lista;
 
     while (Novoprod != NULL)
@@ -104,18 +197,18 @@ void RemoveProduto(ListaBarracas **lista)
         Novoprod = Novoprod->prox;
     }
 
-    //Se a barraca não existir
+    // Se a barraca não existir
     if (Novoprod == NULL)
     {
         printf("Barraca nao encontrada\n");
         return;
     }
 
-    //Recebendo o nome do produto
+    // Recebendo o nome do produto
     printf("Digite o nome do produto que deseja remover: ");
     scanf(" %[^\n]", NomeProduto);
 
-    //Verificando se o produto existe
+    // Verificando se o produto existe
     ListaProdutos *aux = Novoprod->barraca.produtos;
     ListaProdutos *aux2 = NULL;
 
@@ -129,14 +222,14 @@ void RemoveProduto(ListaBarracas **lista)
         aux = aux->prox;
     }
 
-    //Se o produto não existir
+    // Se o produto não existir
     if (aux == NULL)
     {
         printf("Produto nao encontrado\n");
         return;
     }
 
-    //Removendo o produto
+    // Removendo o produto
     if (aux2 == NULL)
     {
         Novoprod->barraca.produtos = aux->prox;
@@ -153,17 +246,18 @@ void RemoveProduto(ListaBarracas **lista)
 
 void RealizaVenda(ListaBarracas **lista)
 {
-    //Variaveis usadas
+    // Variaveis usadas
     char NomeBarraca[Max_Caracter];
     char NomeProduto[Max_Caracter];
     int QuantidadeVenda;
     int verificacao;
 
-    //Recebendo o nome da barraca
+    // Recebendo o nome da barraca
     printf("Digite o nome da barraca que voce deseja realizar a venda: ");
     scanf(" %[^\n]", NomeBarraca);
+    passaMaiusculo(NomeBarraca);
 
-    //Verificando se a barraca existe
+    // Verificando se a barraca existe
     ListaBarracas *Novoprod = *lista;
 
     while (Novoprod != NULL)
@@ -175,18 +269,18 @@ void RealizaVenda(ListaBarracas **lista)
         Novoprod = Novoprod->prox;
     }
 
-    //Se a barraca não existir
+    // Se a barraca não existir
     if (Novoprod == NULL)
     {
         printf("Barraca nao encontrada\n");
         return;
     }
 
-    //Recebendo o nome do produto
+    // Recebendo o nome do produto
     printf("Digite o nome do produto que deseja vender: ");
     scanf(" %[^\n]", NomeProduto);
 
-    //Verificando se o produto existe
+    // Verificando se o produto existe
     ListaProdutos *aux = Novoprod->barraca.produtos;
 
     while (aux != NULL)
@@ -198,33 +292,35 @@ void RealizaVenda(ListaBarracas **lista)
         aux = aux->prox;
     }
 
-    //Se o produto não existir
+    // Se o produto não existir
     if (aux == NULL)
     {
         printf("Produto nao encontrado\n");
         return;
     }
 
-    //Recebendo a quantidade que deseja vender
+    // Recebendo a quantidade que deseja vender
     printf("Digite a quantidade que deseja vender: ");
     scanf(" %d", &QuantidadeVenda);
 
-    //verificando se o usuario digitou apenas numeros inteiros evitando char
-    if(getchar() != '\n'){
+    // verificando se o usuario digitou apenas numeros inteiros evitando char
+    if (getchar() != '\n')
+    {
         printf("Quantidade invalida, digite novamente!\n");
-        while(getchar() != '\n'){
+        while (getchar() != '\n')
+        {
             scanf(" %d", &QuantidadeVenda);
-        }        
+        }
     }
 
-    //Verificando se a quantidade é valida
+    // Verificando se a quantidade é valida
     if (QuantidadeVenda > aux->produto.quantidade)
     {
         printf("Quantidade invalida\n");
         return;
     }
 
-    //Realizando a venda
+    // Realizando a venda
     aux->produto.quantidade -= QuantidadeVenda;
 
     if (aux->produto.quantidade == 0)
@@ -238,16 +334,17 @@ void RealizaVenda(ListaBarracas **lista)
 
 void BuscaProduto(ListaBarracas **lista)
 {
-    //Variaveis usadas
+    // Variaveis usadas
     char NomeBarraca[Max_Caracter];
     char NomeProduto[Max_Caracter];
     int verificacao;
 
-    //Recebendo o nome da barraca
+    // Recebendo o nome da barraca
     printf("Digite o nome da barraca que voce deseja buscar o produto: ");
     scanf(" %[^\n]", NomeBarraca);
+    passaMaiusculo(NomeBarraca);
 
-    //Verificando se a barraca existe
+    // Verificando se a barraca existe
     ListaBarracas *Novoprod = *lista;
 
     while (Novoprod != NULL)
@@ -259,18 +356,18 @@ void BuscaProduto(ListaBarracas **lista)
         Novoprod = Novoprod->prox;
     }
 
-    //Se a barraca não existir
+    // Se a barraca não existir
     if (Novoprod == NULL)
     {
         printf("Barraca nao encontrada\n");
         return;
     }
 
-    //Recebendo o nome do produto
+    // Recebendo o nome do produto
     printf("Digite o nome do produto que deseja buscar: ");
     scanf(" %[^\n]", NomeProduto);
 
-    //Verificando se o produto existe
+    // Verificando se o produto existe
     ListaProdutos *aux = Novoprod->barraca.produtos;
 
     while (aux != NULL)
@@ -282,14 +379,14 @@ void BuscaProduto(ListaBarracas **lista)
         aux = aux->prox;
     }
 
-    //Se o produto não existir
+    // Se o produto não existir
     if (aux == NULL)
     {
         printf("Produto nao encontrado\n");
         return;
     }
 
-    //Mostrando o produto
+    // Mostrando o produto
     system("clear");
     printf("PRODUTO ENCONTRADO\n");
     printf("Nome do produto: %s\n", aux->produto.nome);
@@ -305,16 +402,17 @@ void BuscaProduto(ListaBarracas **lista)
 
 void EditaProduto(ListaBarracas **lista)
 {
-    //Variaveis usadas
+    // Variaveis usadas
     char NomeBarraca[Max_Caracter];
     char NomeProduto[Max_Caracter];
     int verificacao;
 
-    //Recebendo o nome da barraca
+    // Recebendo o nome da barraca
     printf("Digite o nome da barraca que voce deseja editar o produto: ");
     scanf(" %[^\n]", NomeBarraca);
+    passaMaiusculo(NomeBarraca);
 
-    //Verificando se a barraca existe
+    // Verificando se a barraca existe
     ListaBarracas *Novoprod = *lista;
 
     while (Novoprod != NULL)
@@ -326,18 +424,18 @@ void EditaProduto(ListaBarracas **lista)
         Novoprod = Novoprod->prox;
     }
 
-    //Se a barraca não existir
+    // Se a barraca não existir
     if (Novoprod == NULL)
     {
         printf("Barraca nao encontrada\n");
         return;
     }
 
-    //Recebendo o nome do produto
+    // Recebendo o nome do produto
     printf("Digite o nome do produto que deseja editar: ");
     scanf(" %[^\n]", NomeProduto);
 
-    //Verificando se o produto existe
+    // Verificando se o produto existe
     ListaProdutos *aux = Novoprod->barraca.produtos;
 
     while (aux != NULL)
@@ -349,7 +447,7 @@ void EditaProduto(ListaBarracas **lista)
         aux = aux->prox;
     }
 
-    //Se o produto não existir
+    // Se o produto não existir
     if (aux == NULL)
     {
         printf("Produto nao encontrado\n");
@@ -366,29 +464,85 @@ void EditaProduto(ListaBarracas **lista)
 
     switch (verificacao)
     {
-        case 1:
-            printf("Digite o novo nome do produto: ");
-            scanf(" %[^\n]", aux->produto.nome);
-            break;
-        
-        case 2: 
-            printf("Digite o novo tipo do produto: ");
-            scanf(" %[^\n]", aux->produto.tipo);
-            break;
-        
-        case 3:
-            printf("Digite o novo preco do produto: ");
-            scanf(" %f", &aux->produto.preco);
-            break;
-        
-        case 4:
-            printf("Digite a nova quantidade do produto: ");
-            scanf(" %d", &aux->produto.quantidade);
-            break;
+    case 1:
+        printf("Digite o novo nome do produto: ");
+        scanf(" %[^\n]", aux->produto.nome);
 
-        default:
-            printf("Opcao invalida\n");
-            break;
+        // Verificando o formato do nome
+        if (verificaNome(aux->produto.nome) == 1)
+        {
+            while (verificaNome(aux->produto.nome) == 1)
+            {
+                printf("Nome invalido, deseja tentar novamente? (s/n): ");
+                char opcao;
+                scanf(" %c", &opcao);
+                if (opcao == 'n')
+                {
+                    return;
+                }
+                printf("Digite o nome do produto: ");
+                scanf(" %[^\n]", aux->produto.nome);
+            }
+        }
+
+        break;
+
+    case 2:
+        printf("Digite o novo tipo do produto: ");
+        scanf(" %[^\n]", aux->produto.tipo);
+
+        // Verificando o formato do tipo
+        if (verificaNome(aux->produto.tipo) == 1)
+        {
+            while (verificaNome(aux->produto.tipo) == 1)
+            {
+                printf("Tipo invalido, deseja tentar novamente? (s/n): ");
+                char opcao;
+                scanf(" %c", &opcao);
+                if (opcao == 'n')
+                {
+                    return;
+                }
+                printf("Digite o tipo do produto: ");
+                scanf(" %[^\n]", aux->produto.tipo);
+            }
+        }
+
+        break;
+
+    case 3:
+        printf("Digite o novo preco do produto: ");
+        scanf(" %f", &aux->produto.preco);
+
+        // verificando se o usuario digitou apenas numeros inteiros evitando char
+        if (getchar() != '\n')
+        {
+            printf("Preco invalido, digite novamente!\n");
+            while (getchar() != '\n')
+            {
+                scanf(" %f", &aux->produto.preco);
+            }
+        }
+        break;
+
+    case 4:
+        printf("Digite a nova quantidade do produto: ");
+        scanf(" %d", &aux->produto.quantidade);
+
+        // verificando se o usuario digitou apenas numeros inteiros evitando char
+        if (getchar() != '\n')
+        {
+            printf("Quantidade invalida, digite novamente!\n");
+            while (getchar() != '\n')
+            {
+                scanf(" %d", &aux->produto.quantidade);
+            }
+        }
+        break;
+
+    default:
+        printf("Opcao invalida\n");
+        break;
     }
 
     printf("Produto editado com sucesso\n");
@@ -427,7 +581,8 @@ void MostraBarracas(ListaBarracas **lista)
     return;
 }
 
-void RemoveVenda(ListaBarracas **lista, char NomeProduto[], char NomeBarraca[]){
+void RemoveVenda(ListaBarracas **lista, char NomeProduto[], char NomeBarraca[])
+{
     ListaBarracas *aux = *lista;
     ListaProdutos *aux2 = NULL;
 

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 /*Struct que irar guardar os dados das barracas*/
 typedef struct barracas Barraca;
@@ -9,14 +10,14 @@ typedef struct barracas Barraca;
 /*Struct que irar guardar os dados das barracas*/
 typedef struct listabarracas ListaBarracas;
 
-/*Função que irar criar a lista de barracas*/
+/*Função criada para criar a lista de barracas*/
 void CriaListaBarracas(ListaBarracas **lista);
 
-/*Função que irar adicionar uma barraca na lista*/
-void AdicionarBarraca(ListaBarracas **lista);
+/*Função para pegar os dados do arquivos txt e passar para as listas*/
+ListaBarracas *NovaBarracatxt(char nome[], char localizacao[]);
 
-/*Função que irar remover uma barraca da lista*/
-void RemoverBarraca(ListaBarracas **lista);
+/*Função para passar os dados da barraca para lista*/
+void AdicionaBarracaLista(ListaBarracas **lista);
 
-/*Função de editar um produto escolhido pelo usario*/
-void EditaProduto(ListaBarracas **lista);
+/*Função para remover uma barraca escolhida pelo usuario*/
+void RemoveBarraca(ListaBarracas **lista);
