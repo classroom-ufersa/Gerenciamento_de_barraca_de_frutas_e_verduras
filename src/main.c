@@ -14,6 +14,9 @@ int main(void)
     ListaBarracas *listabarr;
     CriaListaBarracas(&listabarr);
     
+    //Variavel que ira guardar o arquivo
+    FILE *arquivo;
+    
     do
     {
             
@@ -127,6 +130,32 @@ int main(void)
 
     } while (opcao != '9');
 
+    ListaBarracas *aux = listabarr;
+
+    arquivo = fopen("dados.txt", "w");
+    //passando as barracas e os seus produtos para o arquivo
+    while (aux != NULL)
+    {
+        fprintf(arquivo, "Nome da barraca: %s   ", aux->barraca.nome);
+        fprintf(arquivo, "Localizacao: %s\n", aux->barraca.localizacao);
+        fprintf(arquivo, "Produtos: \n");
+        
+        ListaProdutos *aux2 = aux->barraca.produtos;
+
+        while (aux2 != NULL)
+        {
+            fprintf(arquivo, "Nome: %s  ", aux2->produto.nome);
+            fprintf(arquivo, "Preco: %.2f   ", aux2->produto.preco);
+            fprintf(arquivo, "Tipo: %s  ", aux2->produto.tipo);
+            fprintf(arquivo, "Quantidade: %d\n", aux2->produto.quantidade);
+            aux2 = aux2->prox;
+        }
+        fprintf(arquivo, "\n");
+        aux = aux->prox;
+    }
+
+    //fechando o arquivo
+    fclose(arquivo);
     //liberando a memoria
     free(listabarr);
     printf("Programa encerrado com sucesso!\n");
