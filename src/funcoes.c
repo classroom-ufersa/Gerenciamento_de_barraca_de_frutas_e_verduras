@@ -1,4 +1,4 @@
-#include "/home/tobias/Desktop/ED1/Gerenciamento_de_barraca_de_frutas_e_verduras/include/funcoes.h"
+#include "/home/lailson/Desktop/Github/repositories/Gerenciamento_de_barraca_de_frutas_e_verduras/include/funcoes.h"
 
 int verificaCaracteresEspeciais(char *nome)
 {

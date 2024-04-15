@@ -1,6 +1,6 @@
-#include "/home/tobias/Desktop/ED1/Gerenciamento_de_barraca_de_frutas_e_verduras/include/produto.h"
-#include "/home/tobias/Desktop/ED1/Gerenciamento_de_barraca_de_frutas_e_verduras/include/barraca.h"
-#include "/home/tobias/Desktop/ED1/Gerenciamento_de_barraca_de_frutas_e_verduras/include/funcoes.h"
+#include "/home/lailson/Desktop/Github/repositories/Gerenciamento_de_barraca_de_frutas_e_verduras/include/barraca.h"
+#include "/home/lailson/Desktop/Github/repositories/Gerenciamento_de_barraca_de_frutas_e_verduras/include/produto.h"
+#include "/home/lailson/Desktop/Github/repositories/Gerenciamento_de_barraca_de_frutas_e_verduras/include/funcoes.h"
 
 struct barracas
 {
@@ -74,25 +74,25 @@ void AdicionaBarracaLista(ListaBarracas **lista)
     }
 
     // se a lista não estiver vazia
-    ListaBarracas *auxnomerepetido2 = *lista;
-    ListaBarracas *auxnomerepetido3 = NULL;
+    ListaBarracas *AuxAnterior = *lista;
+    ListaBarracas *AuxProx = NULL;
 
-    while (auxnomerepetido2 != NULL && strcmp(auxnomerepetido2->barraca.nome, NomeBarraca) < 0)
+    while (AuxAnterior != NULL && strcmp(AuxAnterior->barraca.nome, NomeBarraca) < 0)
     {
-        auxnomerepetido3 = auxnomerepetido2;
-        auxnomerepetido2 = auxnomerepetido2->prox;
+        AuxProx = AuxAnterior;
+        AuxAnterior = AuxAnterior->prox;
     }
 
     // se a barraca for a primeira da lista
-    if (auxnomerepetido3 == NULL)
+    if (AuxProx == NULL)
     {
         nova->prox = *lista;
         *lista = nova;
     }
     else
     {
-        auxnomerepetido3->prox = nova;
-        nova->prox = auxnomerepetido2;
+        AuxProx->prox = nova;
+        nova->prox = AuxAnterior;
     }
 
     printf("Barraca adicionada com sucesso!\n");
