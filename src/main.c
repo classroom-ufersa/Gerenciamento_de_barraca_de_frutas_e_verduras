@@ -1,117 +1,217 @@
 #include "barraca.c"
 #include "produto.c"
+#include "funcoes.c"
 
 int main(void)
-{
+{   
+
     //Variavel de opcao
     char opcao;
 
-    //Lista de barracas
+    //Variavel para trabalhar no menu;
+    int verificacao;
+
+    //Criando a lista de barracas
     ListaBarracas *listabarr;
     CriaListaBarracas(&listabarr);
-    Barraca DadosBarraca;
 
-    //Lista de produtos
-    ListaProdutos *listaprod;
-    CriaLista(&listaprod);
+    //Variavel que ira guardar o arquivo
+    FILE *arquivo;
 
+    //Carregando os dados do arquivo
+    arquivo = fopen("dados.txt", "r");
+
+    if (arquivo == NULL)
+    {
+        printf("Arquivo nao encontrado\n");
+        return 0;
+    }
+
+    //Carregando os dados do arquivo
+    char linha[Max_Caracter];
+
+    char nomebarracaARQ[Max_Caracter];
+    char localizacaoARQ[Max_Caracter];
+    char nomeprodutoARQ[Max_Caracter];
+    float precoprodutoARQ;
+    char tipoprodutoARQ[Max_Caracter];
+    int quantidadeprodutoARQ;
+
+    //pegando os dados do arquivo
+    while (fgets(linha, Max_Caracter, arquivo) != NULL)
+    {
+        if (strstr(linha, "Nome da barraca:"))
+        {
+            sscanf(linha, "Nome da barraca: %s   Localizacao: %s", nomebarracaARQ, localizacaoARQ);
+            ListaBarracas *nova = NovaBarracatxt(nomebarracaARQ, localizacaoARQ);
+
+            if (listabarr == NULL)
+            {
+                listabarr = nova;
+            }
+            else
+            {
+                ListaBarracas *aux = listabarr;
+                while (aux->prox != NULL)
+                {
+                    aux = aux->prox;
+                }
+                aux->prox = nova;
+            }
+        }
+        else if (strstr(linha, "Produtos:"))
+        {
+            while (fgets(linha, Max_Caracter, arquivo) != NULL)
+            {
+                if (strstr(linha, "Nome:"))
+                {
+                    sscanf(linha, "Nome: %s  Preco: %f   Tipo: %s  Quantidade: %d", nomeprodutoARQ, &precoprodutoARQ, tipoprodutoARQ, &quantidadeprodutoARQ);
+                    NovoProdutotxt(&listabarr, nomebarracaARQ, nomeprodutoARQ, precoprodutoARQ, tipoprodutoARQ, quantidadeprodutoARQ);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+    }
+
+    fclose(arquivo);
+    
     do
     {
-
-        printf("=======MENU=======\n\n");
-        printf("1 - Adicionar produto\n");
-        printf("2 - Remover produto\n");
-        printf("3 - Adicionar barraca\n");
-        printf("4 - Remover barraca\n");
-        printf("5 - Realizar venda\n");
-        printf("6 - Buscar produto\n");
-        printf("7 - Listar todas barracas\n");
-        printf("8 - sair\n");
-        printf("==================\n");
+            
+        menu();
 
         printf("Opcao: ");
         scanf(" %c", &opcao);
+        opcao = verificaEscolha(opcao);
         system("clear");
 
         switch (opcao)
         {
             case '1':
-                //verificando se existem barracas cadastradas
-                if(listabarr == NULL)
+                //verificando se existe barracas cadastradas
+                if (listabarr == NULL)
                 {
                     printf("Nenhuma barraca cadastrada\n");
                     break;
                 }
-                else
-                {
-                    AdicionarProduto(&listabarr, &listaprod);
-                }
+                system("clear");
+                AdicionaProduto(&listabarr);
                 break;
 
             case '2':
-                //verificicação de barraca   
-                if(listabarr == NULL)
+                //verificando se existe barracas cadastradas
+                if (listabarr == NULL)
                 {
                     printf("Nenhuma barraca cadastrada\n");
                     break;
                 }
-                else
-                {
-                    Remover_produto(&listabarr, &listaprod);
-                }
+                system("clear");
+                RemoveProduto(&listabarr);
                 break;
 
             case '3':
-                AdicionarBarraca(&listabarr);
+                system("clear");
+                AdicionaBarracaLista(&listabarr);             
                 break;
 
             case '4':
-                //verificicação de barraca
-                if(listabarr == NULL)
+                //verificando se existe barracas cadastradas
+                if (listabarr == NULL)
+                {
+                    printf("Nenhuma barraca cadastrada\n");
+                    break;
+                } 
+                system("clear");      
+                RemoveBarraca(&listabarr);
+                break;               
+
+            case '5':
+                //verificando se existe barracas cadastradas
+                if (listabarr == NULL)
                 {
                     printf("Nenhuma barraca cadastrada\n");
                     break;
                 }
-               
-                else
-                {
-                    RemoverBarraca(&listabarr);
-                    break;                    
-                }                  
-
-            case '5':
-
+                system("clear");
+                RealizaVenda(&listabarr);
                 break;
 
             case '6':
-                //verificicação de barraca
-                if(listabarr == NULL)
+                //verificando se existe barracas cadastradas
+                if (listabarr == NULL)
                 {
                     printf("Nenhuma barraca cadastrada\n");
                     break;
                 }
-                else
-                {
-                    BuscarProduto(&listabarr, &listaprod);
-                }
-                break;
+                system("clear");
+                BuscaProduto(&listabarr);
                 break;
 
             case '7':
+                //verificando se existe barracas cadastradas
+                if (listabarr == NULL)
+                {
+                    printf("Nenhuma barraca cadastrada\n");
+                    break;
+                }
+                system("clear");
+                EditaProduto(&listabarr);
                 break;
 
             case '8':
-                printf("\n");
+                //verificando se existe barracas cadastradas
+                if (listabarr == NULL)
+                {
+                    printf("Nenhuma barraca cadastrada\n");
+                    break;
+                }
+                system("clear");
+                MostraBarracas(&listabarr);
                 break;
+
+            case '9':
+                break;
+
             default:
                 printf("Opcao invalida\n");
                 break;
             }
 
-    } while (opcao != '8');
+    } while (opcao != '9');
+
+        ListaBarracas *aux = listabarr;
+
+        arquivo = fopen("dados.txt", "w");
+        //passando as barracas e os seus produtos para o arquivo
+        while (aux != NULL)
+        {
+            fprintf(arquivo, "Nome da barraca: %s   ", aux->barraca.nome);
+            fprintf(arquivo, "Localizacao: %s\n", aux->barraca.localizacao);
+            fprintf(arquivo, "Produtos: \n");
+            
+            ListaProdutos *aux2 = aux->barraca.produtos;
+
+            while (aux2 != NULL)
+            {
+                fprintf(arquivo, "Nome: %s  ", aux2->produto.nome);
+                fprintf(arquivo, "Preco: %.2f   ", aux2->produto.preco);
+                fprintf(arquivo, "Tipo: %s  ", aux2->produto.tipo);
+                fprintf(arquivo, "Quantidade: %d\n", aux2->produto.quantidade);
+                aux2 = aux2->prox;
+            }
+            fprintf(arquivo, "\n");
+            aux = aux->prox;
+        }
+
+        //fechando o arquivo
+        fclose(arquivo);
 
     //liberando a memoria
-    free(listaprod);
+    free(listabarr);
     printf("Programa encerrado com sucesso!\n");
     return 0;
 }
+

@@ -1,0 +1,44 @@
+Nome da barraca: ALEXANDRE   Localizacao: ALEXANDRIA
+Produtos: 
+Nome: cheiroverde  Preco: 33.00   Tipo: verdura  Quantidade: 3
+
+Nome da barraca: BIA   Localizacao: CATOLE
+Produtos: 
+Nome: melancia  Preco: 22.00   Tipo: fruta  Quantidade: 23
+
+Nome da barraca: CLARA   Localizacao: NATAL
+Produtos: 
+Nome: caju  Preco: 21.00   Tipo: fruta  Quantidade: 21
+
+Nome da barraca: EVELY   Localizacao: PAUDOSFERROS
+Produtos: 
+Nome: morango  Preco: 22.00   Tipo: fruta  Quantidade: 22
+
+Nome da barraca: EVERSON   Localizacao: MARTINS
+Produtos: 
+Nome: beterraba  Preco: 12.00   Tipo: fruta  Quantidade: 12
+
+Nome da barraca: HILLARY   Localizacao: ALEXANDRIA
+Produtos: 
+Nome: laranja  Preco: 12.00   Tipo: fruta  Quantidade: 12
+
+Nome da barraca: LAILSON   Localizacao: UIRAUNA
+Produtos: 
+Nome: banana  Preco: 22.00   Tipo: fruta  Quantidade: 12
+
+Nome da barraca: LETICIA   Localizacao: UIRAUNA
+Produtos: 
+Nome: melao  Preco: 33.00   Tipo: fruta  Quantidade: 33
+
+Nome da barraca: LUIZ   Localizacao: CAJAZERINHA
+Produtos: 
+Nome: abacaxi  Preco: 22.00   Tipo: fruta  Quantidade: 11
+
+Nome da barraca: SHAMIRA   Localizacao: PAUDOSFERROS
+Produtos: 
+Nome: tomate  Preco: 22.00   Tipo: fruta  Quantidade: 22
+
+Nome da barraca: TOBIAS   Localizacao: NATAL
+Produtos: 
+Nome: uva  Preco: 111.00   Tipo: fruta  Quantidade: 111
+
