@@ -586,6 +586,7 @@ void RemoveVenda(ListaBarracas **lista, char NomeProduto[], char NomeBarraca[])
     ListaBarracas *aux = *lista;
     ListaProdutos *aux2 = NULL;
 
+    //verificando se a barraca existe
     while (aux != NULL)
     {
         if (strcmp(aux->barraca.nome, NomeBarraca) == 0)
@@ -595,6 +596,7 @@ void RemoveVenda(ListaBarracas **lista, char NomeProduto[], char NomeBarraca[])
         aux = aux->prox;
     }
 
+    //se a barraca não existir
     if (aux == NULL)
     {
         return;
@@ -602,6 +604,7 @@ void RemoveVenda(ListaBarracas **lista, char NomeProduto[], char NomeBarraca[])
 
     aux2 = aux->barraca.produtos;
 
+    //verificando se o produto existe
     while (aux2 != NULL)
     {
         if (strcmp(aux2->produto.nome, NomeProduto) == 0)
@@ -611,15 +614,19 @@ void RemoveVenda(ListaBarracas **lista, char NomeProduto[], char NomeBarraca[])
         aux2 = aux2->prox;
     }
 
+    //se o produto não existir
     if (aux2 == NULL)
     {
         return;
     }
 
+    //removendo o produto
     if (aux2 == aux->barraca.produtos)
     {
         aux->barraca.produtos = aux2->prox;
     }
+
+    //se o produto for o ultimo da lista
     else
     {
         ListaProdutos *aux3 = aux->barraca.produtos;
@@ -628,8 +635,10 @@ void RemoveVenda(ListaBarracas **lista, char NomeProduto[], char NomeBarraca[])
             aux3 = aux3->prox;
         }
         aux3->prox = aux2->prox;
+        free(aux3);
     }
 
+    free(aux);
     free(aux2);
     return;
 }
